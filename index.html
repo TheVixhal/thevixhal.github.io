@@ -72,6 +72,14 @@ source venv/bin/activate # Windows ke liye: venv\Scripts\activate</code></pre>
         <pre><code class="language-bash">pip install Flask Flask-SQLAlchemy Flask-Migrate</code></pre>
 
         <p>Ab apne project folder mein `app.py`, `models.py`, aur `templates/` ke folders create karo. Hum inhi files mein code likhne wale hain.</p>
+
+        <pre><code> File Structure:
+            website/
+                templates/
+                    login.html
+                    register.html
+                app.py
+                models.py </code></pre
     </div>
 
     <div class="scene">
@@ -94,15 +102,11 @@ db.init_app(app)
 
 # Define Registration Route Here:
 
-
-            
 # Define Login Route Here:
-
 
 # mainguard            
 if __name__ == '__main__':
     app.run(debug=True)
-
 </code></pre>
 
         <p><span class="speaker">Vixhal (voiceover):</span><br>
@@ -268,12 +272,11 @@ def login():
     </div>
 
     <div class="scene">
-        <h3 <h3 class="scene-title">Scene 10: Full app.py Code</h3>
+        <h3 <h3 class="scene-title">Full app.py Code</h3>
         <pre><code class="language-python">
 from flask import Flask, render_template, request, redirect, url_for
 from flask_migrate import Migrate
 from models import db, User
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -309,13 +312,8 @@ def login():
             return "Invalid credentials, please try again."
     return render_template('login.html')
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
-        </code></pre>
+    app.run(debug=True)</code></pre>
 
     <h2>Thank You For Reading!</h2>
     <p>Hope you enjoyed this tutorial. If you have any questions or need further clarification, please don't hesitate to ask. Happy coding!</p>
