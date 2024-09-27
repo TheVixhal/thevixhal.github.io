@@ -73,7 +73,7 @@ source venv/bin/activate # Windows ke liye: venv\Scripts\activate</code></pre>
 
         <p>Ab apne project folder mein `app.py`, `models.py`, aur `templates/` ke folders create karo. Hum inhi files mein code likhne wale hain.</p>
 
-        <pre><code class="language-bash"> File Structure:
+        <pre><code class="language-bash">File Structure:
 flask-app/
     templates/
         login.html
@@ -99,6 +99,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+# Initialize Migrate Here:            
 
 # Define Registration Route Here:
 
@@ -148,7 +149,7 @@ class User(db.Model):
 
         <pre><code class="language-python">from flask_migrate import Migrate
 
-# Initialize Migrate
+# Initialize Migrate Here
 migrate = Migrate(app, db)</code></pre>
 
         <p><span class="speaker">Vixhal (voiceover):</span><br>
