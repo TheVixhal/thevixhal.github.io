@@ -83,13 +83,27 @@ source venv/bin/activate # Windows ke liye: venv\Scripts\activate</code></pre>
         Chalo `app.py` mein Flask app setup karte hain. Pehle Flask aur SQLAlchemy import karte hain, phir database connection configure karte hain.</p>
 
         <pre><code class="language-python">from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+from models import db, User
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)</code></pre>
+db.init_app(app)
+
+# Define Registration Route Here:
+
+
+            
+# Define Login Route Here:
+
+
+# mainguard            
+if __name__ == '__main__':
+    app.run(debug=True)
+
+</code></pre>
 
         <p><span class="speaker">Vixhal (voiceover):</span><br>
         Yaha humne SQLite database `users.db` ka connection setup kiya hai. Ab hum apne user model define karenge.</p>
@@ -102,7 +116,9 @@ db = SQLAlchemy(app)</code></pre>
         <p><span class="speaker">Vixhal (voiceover):</span><br>
         `models.py` file mein ek `User` model define karte hain jisme fields hongi ID, username, email, aur password ke liye.</p>
 
-        <pre><code class="language-python">from app import db
+        <pre><code class="language-python">from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -251,9 +267,63 @@ def login():
         <p class="action">(Outro Music)</p>
     </div>
 
+    <div class="scene">
+        <h3 <h3 class="scene-title">Scene 10: Full app.py Code</h3>
+        <pre><code class="language-python">
+from flask import Flask, render_template, request, redirect, url_for
+from flask_migrate import Migrate
+from models import db, User
+
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+migrate = Migrate(app, db)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        new_user = User(username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        
+        user = User.query.filter_by(email=email, password=password).first()
+        if user:
+            return f"Welcome {user.username}!"
+        else:
+            return "Invalid credentials, please try again."
+    return render_template('login.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+        </code></pre>
+
     <h2>Thank You For Reading!</h2>
     <p>Hope you enjoyed this tutorial. If you have any questions or need further clarification, please don't hesitate to ask. Happy coding!</p>
 
+    
+
+
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
